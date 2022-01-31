@@ -3,20 +3,14 @@ import {  useAppDispatch } from "../app/hook";
 import { login } from "../features/login/loginSlice";
 import GuestGuard from '../components/guestGuard';
 import * as ServiceWorker from '../libs/serviceWorker';
-;
-
-
-
 
 function Login() {
-
-
   useEffect(()=>{
-            if(window.navigator && 'serviceWorker' in window.navigator){
-  ServiceWorker.register();
-//   window.navigator.serviceWorker.register('./service-worker.js')
-}
-  },[])
+  if(window.navigator && 'serviceWorker' in window.navigator){
+      ServiceWorker.register();
+    }
+  },[]);
+  
   let [email,setEmail] = useState('');
   let [password,setPassword] = useState('');
   const dispatch = useAppDispatch();
@@ -32,7 +26,7 @@ function Login() {
       <input type="hidden" name="remember" value="true"/>
       <div className="rounded-md shadow-sm -space-y-px">
         <div>
-          <label htmlFor="email-address" className="sr-only">Email address</label>
+          <label htmlFor="email-address" className="sr-only text-3xl">Email address</label>
           <input value={email} onChange={(e)=>{setEmail(e.target.value)}} id="email-address" name="email" type="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address"/>
         </div>
         <div>

@@ -3,28 +3,25 @@ import React, { useEffect } from 'react';
 import AuthGuard from '../components/authGuard';
 import Header from '../components/header';
 
-
-
-
 let installPrompt = null;
-
-function index(props:{categories:{id:string,name:string}[]}) {
+function Index(props:{categories:{id:string,name:string}[]}) {
   useEffect(()=>{
     window.addEventListener('beforeinstallprompt',function(e){
         e.preventDefault();
         installPrompt = e;
         return false;
     });
-
   },[]);
+
   function install(){
       if (installPrompt) {
-          installPrompt.prompt();
-          installPrompt.userChoice.then(function (choice) {
-            installPrompt = null;
-          });
-        }
-    }
+        installPrompt.prompt();
+        installPrompt.userChoice.then(function (choice) {
+          installPrompt = null;
+        });
+      }
+  }
+
   return <div>
     <Header/>
     <button onClick={install}>
@@ -40,7 +37,7 @@ function index(props:{categories:{id:string,name:string}[]}) {
   </div>;
 }
 
-index.getInitialProps = async (context)=> {
+Index.getInitialProps = async (context)=> {
   const category = await fetch('http://localhost:3001/category').then(response=>{
     return response.json();
   });
@@ -49,4 +46,4 @@ index.getInitialProps = async (context)=> {
   }
 }
 
-export default AuthGuard<{categories:{id:string,name:string}[]}>(index as NextComponentType<{categories:{id:string,name:string}[]}>);
+export default AuthGuard<{categories:{id:string,name:string}[]}>(Index as NextComponentType<{categories:{id:string,name:string}[]}>);
